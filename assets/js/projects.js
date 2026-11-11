@@ -90,15 +90,6 @@ export const projects = [
     did: "Split KYC into five clear steps with a live status dashboard, plus an admin side to approve or reject.",
     learned: "In finance, trust is a UX feature: show people where they are and what happens next.",
   },
-  {
-    id: "2013-adam-surat", year: 2013, tier: "selected",
-    title: "Adam Surat: DVD menus", kicker: "Film · Interface", role: "Designer",
-    cats: ["before"], images: ["adam-surat/menu", "adam-surat/play", "adam-surat/paintings", "adam-surat/drawing", "adam-surat/letter", "adam-surat/sultan", "adam-surat/packaging", "adam-surat/book"],
-    problem: "A landmark documentary needed a home for the film, its paintings, drawings and letters.",
-    did: "Designed the DVD's interactive menus, plus the book, the cover and post-production, with the Tareque Masud Memorial Trust.",
-    learned: "My first interface, before I knew the word UX.",
-    link: "story.html#frame-0",
-  },
   // ── Archive: the contact sheet
   { id: "2018-profile", year: 2018, tier: "archive", title: "Professional profile onboarding", kicker: "Web app", cats: ["consumer", "web"], gallery: "work/profile" },
   { id: "2018-world-cup", year: 2018, tier: "archive", title: "World Cup 2018 app", kicker: "Mobile · UI", cats: ["consumer", "mobile"], gallery: "work/world-cup" },

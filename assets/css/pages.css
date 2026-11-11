@@ -512,3 +512,41 @@ dialog.modal--lightbox { width: min(1400px, 100% - 24px); background: #070706; }
 .cover-shot .browser { position: absolute; inset: 4% 6% auto 6%; width: auto; max-height: 96%; }
 .cover-shot .sticky { position: absolute; left: 0; bottom: 6%; z-index: 2; }
 .feature:hover .cover-shot .browser { transform: translateY(-6px); }
+
+/* ───────── v2.1 · contact page ───────── */
+.ct { max-width: 1040px; padding-bottom: clamp(56px, 9vw, 110px); }
+.ct__head { padding: clamp(40px, 8vh, 90px) 0 clamp(28px, 4vw, 48px); }
+.ct__head h1 { font-size: clamp(3.4rem, 13vw, 9rem); letter-spacing: -.045em; line-height: .92; margin-top: 16px; }
+.ct__rule { display: block; width: 120px; height: 2px; background: var(--accent); margin: clamp(22px, 3vw, 36px) 0; }
+.ct__head .lead { max-width: 46ch; }
+.ct__form, .ct__msg { display: grid; gap: clamp(22px, 3vw, 32px); }
+.ct__why { border: 0; margin: 0; padding: 0; min-width: 0; }
+.ct__why legend, .ct__field > .mono { display: block; padding: 0; margin-bottom: 10px; color: var(--paper-2); letter-spacing: .14em; }
+.ct__cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.ct__card { position: relative; display: block; cursor: pointer; }
+.ct__card input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+.ct__card > span { display: block; height: 100%; padding: 22px; border: 1px solid var(--line-2); border-radius: var(--r); background: var(--ink-2); transition: border-color .25s, background .25s; }
+.ct__card b { display: block; font-family: var(--f-display); font-size: 1.25rem; font-weight: 600; letter-spacing: -.01em; }
+.ct__card small { display: block; margin-top: 8px; font-size: .95rem; color: var(--paper-2); }
+.ct__card:hover > span { border-color: var(--paper-2); }
+.ct__card input:checked + span { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 9%, var(--ink-2)); }
+.ct__card input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 3px; }
+.ct__row { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(14px, 2.4vw, 28px); }
+.ct__field { display: block; }
+.ct__field input, .ct__field textarea { width: 100%; font: inherit; font-size: 1.05rem; color: var(--paper); background: var(--ink-2); border: 1px solid var(--line-2); border-radius: var(--r); padding: 16px 18px; transition: border-color .2s, box-shadow .2s; }
+.ct__field textarea { resize: vertical; min-height: 180px; line-height: 1.6; }
+.ct__field input:focus, .ct__field textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent); }
+.ct__field ::placeholder { color: var(--muted); }
+.ct__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; }
+.ct__actions .btn { min-height: 56px; padding-inline: 28px; font-size: .82rem; }
+.ct__note { margin: 0; font-size: .9rem; }
+.ct__err { margin: 0; color: #ffb4a8; font-size: .95rem; }
+:root[data-theme="light"] .ct__err { color: #a3261a; }
+.ct__book { margin-top: clamp(22px, 3vw, 32px); }
+.ct__done { padding: clamp(28px, 5vw, 56px) 0; }
+.ct__done h2 { font-size: var(--t-h1); margin-bottom: 12px; }
+.ct__direct { list-style: none; margin: clamp(44px, 7vw, 80px) 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line); }
+.ct__direct li { padding: 20px 20px 0 0; display: grid; gap: 6px; }
+.ct__direct a { font-family: var(--f-display); font-size: 1.15rem; text-decoration: none; overflow-wrap: anywhere; }
+.ct__direct a:hover { color: var(--accent); }
+@media (max-width: 720px) { .ct__cards, .ct__row, .ct__direct { grid-template-columns: 1fr; } }

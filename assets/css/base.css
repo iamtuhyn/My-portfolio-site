@@ -396,3 +396,26 @@ dialog .booking { border: 0; border-radius: 0; }
 
 /* v2.0: the story page keeps its film-script mono voice and its tuned line lengths */
 body.story { --f-body: var(--f-mono); --t-lead: clamp(.94rem, 1.3vw, 1.05rem); --t-body: .875rem; --t-small: .78rem; }
+
+/* ── v2.1 · side drawer: home, portfolio, pages, contact, quick links and theme in one place */
+.drawer { position: fixed; inset: 0; z-index: 120; visibility: hidden; transition: visibility 0s .4s; }
+.drawer.is-open { visibility: visible; transition: none; }
+.drawer__scrim { position: absolute; inset: 0; background: rgb(6 5 8 / .6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); opacity: 0; transition: opacity .35s var(--ease); }
+.drawer.is-open .drawer__scrim { opacity: 1; }
+.drawer__panel { position: absolute; top: 0; right: 0; bottom: 0; width: min(420px, 100vw); padding: 26px clamp(24px, 6vw, 44px) 28px; overflow-y: auto; display: flex; flex-direction: column; gap: 22px;
+  background: var(--ink-2); border-left: 1px solid var(--line); box-shadow: -30px 0 80px var(--shadow); transform: translateX(100%); transition: transform .45s var(--ease-out); }
+.drawer.is-open .drawer__panel { transform: none; }
+.drawer__close { align-self: flex-end; width: 44px; height: 44px; display: grid; place-items: center; border: 0; background: none; color: var(--accent); border-radius: 8px; }
+.drawer__close:hover { background: var(--ink-3); }
+.drawer__close svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+.drawer__nav { display: grid; gap: 2px; }
+.drawer__nav a { text-decoration: none; font-family: var(--f-display); letter-spacing: -.02em; line-height: 1.15; transition: color .2s, transform .3s var(--ease-out); }
+.drawer__nav a:hover { color: var(--accent); transform: translateX(4px); }
+.drawer__top { font-size: clamp(1.5rem, 4.4vw, 1.8rem); font-weight: 500; color: var(--paper); padding: 9px 0; }
+.drawer__sub { font-size: 1.18rem; font-weight: 400; color: var(--paper-2); padding: 6px 0 6px 18px; }
+.drawer__label { color: var(--muted); margin: 10px 0 2px; }
+.drawer__nav a[aria-current="page"] { color: var(--primary-ink); }
+.drawer__nav a.drawer__contact { color: var(--accent); }
+.drawer .me__list { margin-top: auto; }
+.drawer .theme { margin-top: 0; }
+.has-drawer { overflow: hidden; }

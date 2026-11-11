@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact · Joacim Tuhin Gain</title>
+  <meta name="description" content="Work together, give feedback, or book a 30-minute conversation with Joacim Tuhin Gain, Design Engineer and UX lead.">
+  <meta name="theme-color" content="#0d0c0b" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f4efe6" media="(prefers-color-scheme: light)">
+  <script>document.documentElement.className = "js"; try { const t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap">
+  <link rel="stylesheet" href="assets/css/base.css?v=2.1">
+  <link rel="stylesheet" href="assets/css/pages.css?v=2.1">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23593c8f'/%3E%3Cpath d='M7 11V7h4M25 11V7h-4M7 21v4h4M25 21v4h-4' stroke='%23a8d5ba' stroke-width='2' fill='none'/%3E%3C/svg%3E">
+  <script type="module" src="assets/js/site.js"></script>
+  <script type="module" src="assets/js/contact.js"></script>
+</head>
+<body data-page="contact" data-base="">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<main id="main" class="page">
+  <div class="wrap ct">
+    <header class="ct__head">
+      <p class="mono mint">Clermont-Ferrand, France · French time (CET)</p>
+      <h1>Contact</h1>
+      <span class="ct__rule" aria-hidden="true"></span>
+      <p class="lead">A role, a project, a comment on this site, or just a conversation. Pick what fits and I'll take it from there.</p>
+    </header>
+
+    <form class="ct__form" id="ct-form" novalidate>
+      <fieldset class="ct__why">
+        <legend class="mono">What brings you here?</legend>
+        <div class="ct__cards">
+          <label class="ct__card"><input type="radio" name="why" value="work" checked><span><b>Work together</b><small>A role on your team, or a project</small></span></label>
+          <label class="ct__card"><input type="radio" name="why" value="feedback"><span><b>Give feedback</b><small>On this site or any of my work</small></span></label>
+          <label class="ct__card"><input type="radio" name="why" value="book"><span><b>Book a call</b><small>30 minutes, pick a time slot</small></span></label>
+        </div>
+      </fieldset>
+
+      <div class="ct__msg" id="ct-msg">
+        <div class="ct__row">
+          <label class="ct__field"><span class="mono">Your name</span><input type="text" name="name" autocomplete="name" required></label>
+          <label class="ct__field"><span class="mono">Your email</span><input type="email" name="email" autocomplete="email" required></label>
+        </div>
+        <label class="ct__field"><span class="mono">Message</span><textarea name="message" rows="7" placeholder="What's on your mind?" required></textarea></label>
+        <p class="ct__err" id="ct-err" role="alert" hidden></p>
+        <div class="ct__actions">
+          <button class="btn btn--mint" type="submit" data-icon="→">Send message</button>
+          <p class="muted ct__note" id="ct-note"></p>
+        </div>
+      </div>
+    </form>
+
+    <section class="ct__book" id="book" aria-label="Book a 30-minute conversation" hidden>
+      <div data-booking></div>
+    </section>
+
+    <div class="ct__done" id="ct-done" role="status" hidden>
+      <h2>Thank you.</h2>
+      <p class="lead" id="ct-done-text"></p>
+    </div>
+
+    <ul class="ct__direct">
+      <li><span class="mono muted">Email</span><a href="mailto:iamtuhyn@gmail.com">iamtuhyn@gmail.com</a></li>
+      <li><span class="mono muted">LinkedIn</span><a href="https://www.linkedin.com/in/tuhyngain" target="_blank" rel="noopener">linkedin.com/in/tuhyngain ↗</a></li>
+      <li><span class="mono muted">Résumé</span><a href="assets/Joacim-Tuhin-Gain-Resume.pdf" target="_blank" rel="noopener">One page, PDF ↗</a></li>
+    </ul>
+  </div>
+</main>
+
+<footer class="site-foot">
+  <span>© 2026 Joacim Tuhin Gain · Clermont-Ferrand, France</span>
+  <nav aria-label="Footer"><a href="work.html">Work</a><a href="story.html">Story</a><a href="expertise.html">Expertise</a><a href="more.html">Frames</a><a href="contact.html">Contact</a></nav>
+</footer>
+</body>
+</html>

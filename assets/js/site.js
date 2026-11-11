@@ -36,7 +36,8 @@ function applyTheme(t) {
   dispatchEvent(new CustomEvent("themechange"));
 }
 
-const NAV = [["story.html", "Story", "story"], ["work.html", "Work", "work"], ["expertise.html", "Expertise", "expertise"], ["more.html", "Frames", "more"]];
+const NAV = [["work.html", "Work", "work"], ["story.html", "Story", "story"], ["expertise.html", "Expertise", "expertise"], ["more.html", "Frames", "more"], ["contact.html", "Contact", "contact"]];
+const CASES = [["work/clm.html", "CLM ecosystem"], ["work/recyclium.html", "Recyclium"], ["work/gridops.html", "GridOps"], ["work.html", "Every project"]];
 
 function renderHud() {
   const here = (key) => (PAGE === key ? ' aria-current="page"' : "");
@@ -47,26 +48,43 @@ function renderHud() {
     <a class="brand" href="${BASE}index.html" aria-label="Joacim Tuhin Gain, Design Engineer: home">${LOGO}<span class="brand__text"><b>Joacim Tuhin Gain</b><span>Design Engineer</span></span></a>
     <nav class="menu" aria-label="Main"><span class="menu__frame" aria-hidden="true"><i></i><i></i><i></i><i></i></span>${links}</nav>
     <div class="me">
-      <button class="me__btn" type="button" aria-expanded="false" aria-controls="me-panel" aria-label="Menu: contact, résumé and theme">
+      <button class="me__btn" type="button" aria-expanded="false" aria-controls="drawer" aria-label="Open the menu: pages, contact, résumé and theme">
         <img src="${BASE}assets/img/docs/on-set.webp" alt="" width="40" height="40"><span class="me__dot" aria-hidden="true"></span>
       </button>
-      <div class="me__panel" id="me-panel">
-        <nav class="me__nav" aria-label="Main (mobile)">${links}</nav>
-        <p class="me__label mono">Available for projects</p>
-        <ul class="me__list">
-          <li><button type="button" data-book><span data-scramble>Book a conversation</span><span aria-hidden="true">( + )</span></button></li>
-          <li><a href="mailto:${CONTACT.email}"><span data-scramble>Email me</span><span aria-hidden="true">( + )</span></a></li>
-          <li><a href="${BASE}${CONTACT.resume}" download="Joacim-Tuhin-Gain-Resume.pdf"><span data-scramble>Download résumé</span><span aria-hidden="true">( ↓ )</span></a></li>
-          ${CONTACT.linkedin ? `<li><a href="${CONTACT.linkedin}" target="_blank" rel="noopener"><span data-scramble>LinkedIn</span><span aria-hidden="true">( ↗ )</span></a></li>` : ""}
-        </ul>
-        <div class="theme" role="group" aria-label="Theme">
-          ${THEMES.map((t) => `<button type="button" data-theme-set="${t}" aria-pressed="false">${THEME_ICONS[t]}<span>${t[0].toUpperCase() + t.slice(1)}</span></button>`).join("")}
-        </div>
-      </div>
     </div>`;
   document.body.prepend(hud);
+
+  // Side drawer: everything in one place (home, portfolio, pages, contact, quick links, theme)
+  const at = (key) => (PAGE === key ? ' aria-current="page"' : "");
+  const drawer = document.createElement("div");
+  drawer.className = "drawer"; drawer.id = "drawer"; drawer.inert = true;
+  drawer.innerHTML = `
+    <div class="drawer__scrim" data-drawer-close></div>
+    <aside class="drawer__panel" role="dialog" aria-modal="true" aria-label="Menu">
+      <button class="drawer__close" type="button" data-drawer-close aria-label="Close the menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+      <nav class="drawer__nav" aria-label="All pages">
+        <a class="drawer__top" href="${BASE}index.html"${at("home")}>Home</a>
+        <p class="mono drawer__label">Portfolio</p>
+        ${CASES.map(([href, label]) => `<a class="drawer__sub" href="${BASE}${href}">${label}</a>`).join("")}
+        <a class="drawer__top" href="${BASE}story.html"${at("story")}>Story</a>
+        <a class="drawer__top" href="${BASE}expertise.html"${at("expertise")}>Expertise</a>
+        <a class="drawer__top" href="${BASE}more.html"${at("more")}>Frames</a>
+        <a class="drawer__top drawer__contact" href="${BASE}contact.html"${at("contact")}>Contact</a>
+      </nav>
+      <ul class="me__list">
+        <li><a href="${BASE}contact.html#book"><span data-scramble>Book a conversation</span><span aria-hidden="true">( + )</span></a></li>
+        <li><a href="mailto:${CONTACT.email}"><span data-scramble>Email me</span><span aria-hidden="true">( + )</span></a></li>
+        <li><a href="${BASE}${CONTACT.resume}" download="Joacim-Tuhin-Gain-Resume.pdf"><span data-scramble>Download résumé</span><span aria-hidden="true">( ↓ )</span></a></li>
+        ${CONTACT.linkedin ? `<li><a href="${CONTACT.linkedin}" target="_blank" rel="noopener"><span data-scramble>LinkedIn</span><span aria-hidden="true">( ↗ )</span></a></li>` : ""}
+      </ul>
+      <div class="theme" role="group" aria-label="Theme">
+        ${THEMES.map((t) => `<button type="button" data-theme-set="${t}" aria-pressed="false">${THEME_ICONS[t]}<span>${t[0].toUpperCase() + t.slice(1)}</span></button>`).join("")}
+      </div>
+    </aside>`;
+  document.body.append(drawer);
+
   applyTheme(getTheme());
-  hud.querySelectorAll("[data-theme-set]").forEach((b) => b.addEventListener("click", () => applyTheme(b.dataset.themeSet)));
+  drawer.querySelectorAll("[data-theme-set]").forEach((b) => b.addEventListener("click", () => applyTheme(b.dataset.themeSet)));
   matchMedia("(prefers-color-scheme: light)").addEventListener?.("change", () => dispatchEvent(new CustomEvent("themechange")));
 
   // the bar gets its glass once the page moves
@@ -94,13 +112,17 @@ function renderHud() {
   document.fonts?.ready.then(() => place(rest()));
   requestAnimationFrame(() => place(rest()));
 
-  // the panel opens on click (not hover), closes on outside click or Escape
-  const me = hud.querySelector(".me"), btn = me.querySelector(".me__btn");
-  const setOpen = (open) => { me.classList.toggle("is-open", open); btn.setAttribute("aria-expanded", String(open)); };
-  btn.addEventListener("click", () => setOpen(!me.classList.contains("is-open")));
-  document.addEventListener("click", (e) => { if (!me.contains(e.target)) setOpen(false); });
-  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && me.classList.contains("is-open")) { setOpen(false); btn.focus(); } });
-  me.querySelector("[data-book]").addEventListener("click", () => setOpen(false));
+  // the drawer opens from the photo button, closes on the scrim, the close button, a link or Escape
+  const btn = hud.querySelector(".me__btn");
+  const setOpen = (open) => {
+    drawer.classList.toggle("is-open", open); drawer.inert = !open;
+    btn.setAttribute("aria-expanded", String(open));
+    document.documentElement.classList.toggle("has-drawer", open);
+    if (open) drawer.querySelector(".drawer__close").focus(); else btn.focus();
+  };
+  btn.addEventListener("click", () => setOpen(true));
+  drawer.addEventListener("click", (e) => { if (e.target.closest("[data-drawer-close], a")) setOpen(false); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && drawer.classList.contains("is-open")) setOpen(false); });
 }
 
 /* ── Buttons: add the ( + ) icon and a scramble label automatically */

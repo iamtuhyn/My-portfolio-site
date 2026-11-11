@@ -1,6 +1,6 @@
 // FRAMES v0.5 · /work: cards + contact sheet from projects.js, filters,
 // view toggle, and a gallery modal for every project.
-import { projects, filters } from "./projects.js?v=1.2.1";
+import { projects, filters } from "./projects.js?v=2.1";
 import { galleries } from "./media.js";
 import { makeDialog, enhanceButtons, observeReveals } from "./site.js";
 
