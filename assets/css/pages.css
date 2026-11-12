@@ -550,3 +550,14 @@ dialog.modal--lightbox { width: min(1400px, 100% - 24px); background: #070706; }
 .ct__direct a { font-family: var(--f-display); font-size: 1.15rem; text-decoration: none; overflow-wrap: anywhere; }
 .ct__direct a:hover { color: var(--accent); }
 @media (max-width: 720px) { .ct__cards, .ct__row, .ct__direct { grid-template-columns: 1fr; } }
+
+/* v2.2 · contact: a smaller heading so the whole form sits in the first screen */
+.ct__head { padding: clamp(20px, 4vh, 40px) 0 clamp(18px, 2.4vw, 26px); }
+.ct__head h1 { font-size: clamp(2.4rem, 5vw, 4rem); letter-spacing: -.035em; line-height: 1; margin-top: 10px; }
+.ct__head .lead { margin: 12px 0 0; max-width: none; }
+.ct__form, .ct__msg { gap: clamp(16px, 2.2vh, 24px); }
+.ct__card > span { padding: 16px 18px; }
+.ct__card small { margin-top: 4px; }
+.ct__field input, .ct__field textarea { padding: 13px 16px; }
+.ct__field textarea { min-height: 110px; }
+.ct__actions .btn { min-height: 50px; }

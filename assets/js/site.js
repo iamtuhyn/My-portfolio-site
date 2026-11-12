@@ -1,7 +1,9 @@
 // FRAMES v0.5 · shared behaviour for every page.
 import { CONTACT } from "./config.js";
+import { LANGS, lang, t, translate, setLang } from "./i18n.js";
 
 document.documentElement.classList.replace("no-js", "js");
+translate();                                  // swap page text before buttons and reveals are set up
 export const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const finePointer = matchMedia("(hover: hover) and (pointer: fine)").matches;
 const BASE = document.body.dataset.base || "";
@@ -37,7 +39,7 @@ function applyTheme(t) {
 }
 
 const NAV = [["work.html", "Work", "work"], ["story.html", "Story", "story"], ["expertise.html", "Expertise", "expertise"], ["more.html", "Frames", "more"], ["contact.html", "Contact", "contact"]];
-const CASES = [["work/clm.html", "CLM ecosystem"], ["work/recyclium.html", "Recyclium"], ["work/gridops.html", "GridOps"], ["work.html", "Every project"]];
+const CASES = [["work/clm.html", "CLM ecosystem"], ["work/recyclium.html", "Recyclium"], ["work/gridops.html", "GridOps"]];
 
 function renderHud() {
   const here = (key) => (PAGE === key ? ' aria-current="page"' : "");
@@ -46,10 +48,10 @@ function renderHud() {
   hud.className = "hud";
   hud.innerHTML = `
     <a class="brand" href="${BASE}index.html" aria-label="Joacim Tuhin Gain, Design Engineer: home">${LOGO}<span class="brand__text"><b>Joacim Tuhin Gain</b><span>Design Engineer</span></span></a>
-    <nav class="menu" aria-label="Main"><span class="menu__frame" aria-hidden="true"><i></i><i></i><i></i><i></i></span>${links}</nav>
     <div class="me">
-      <button class="me__btn" type="button" aria-expanded="false" aria-controls="drawer" aria-label="Open the menu: pages, contact, résumé and theme">
-        <img src="${BASE}assets/img/docs/on-set.webp" alt="" width="40" height="40"><span class="me__dot" aria-hidden="true"></span>
+      <button class="navbtn" type="button" aria-expanded="false" aria-controls="drawer" aria-label="${t("Open the menu")}">
+        <span class="navbtn__me"><img src="${BASE}assets/img/docs/on-set.webp" alt="" width="36" height="36"><span class="me__dot" aria-hidden="true"></span></span>
+        <svg class="navbtn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
       </button>
     </div>`;
   document.body.prepend(hud);
@@ -63,20 +65,23 @@ function renderHud() {
     <aside class="drawer__panel" role="dialog" aria-modal="true" aria-label="Menu">
       <button class="drawer__close" type="button" data-drawer-close aria-label="Close the menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
       <nav class="drawer__nav" aria-label="All pages">
-        <a class="drawer__top" href="${BASE}index.html"${at("home")}>Home</a>
-        <p class="mono drawer__label">Portfolio</p>
+        <a class="drawer__top" href="${BASE}index.html"${at("home")}>${t("Home")}</a>
+        <a class="drawer__top" href="${BASE}work.html"${at("work")}>${t("Portfolio")}</a>
         ${CASES.map(([href, label]) => `<a class="drawer__sub" href="${BASE}${href}">${label}</a>`).join("")}
-        <a class="drawer__top" href="${BASE}story.html"${at("story")}>Story</a>
-        <a class="drawer__top" href="${BASE}expertise.html"${at("expertise")}>Expertise</a>
-        <a class="drawer__top" href="${BASE}more.html"${at("more")}>Frames</a>
-        <a class="drawer__top drawer__contact" href="${BASE}contact.html"${at("contact")}>Contact</a>
+        <a class="drawer__top" href="${BASE}story.html"${at("story")}>${t("Story")}</a>
+        <a class="drawer__top" href="${BASE}expertise.html"${at("expertise")}>${t("Expertise")}</a>
+        <a class="drawer__top" href="${BASE}more.html"${at("more")}>${t("Frames")}</a>
+        <a class="drawer__top drawer__contact" href="${BASE}contact.html"${at("contact")}>${t("Contact")}</a>
       </nav>
       <ul class="me__list">
-        <li><a href="${BASE}contact.html#book"><span data-scramble>Book a conversation</span><span aria-hidden="true">( + )</span></a></li>
-        <li><a href="mailto:${CONTACT.email}"><span data-scramble>Email me</span><span aria-hidden="true">( + )</span></a></li>
-        <li><a href="${BASE}${CONTACT.resume}" download="Joacim-Tuhin-Gain-Resume.pdf"><span data-scramble>Download résumé</span><span aria-hidden="true">( ↓ )</span></a></li>
+        <li><a href="${BASE}contact.html#book"><span data-scramble>${t("Book a conversation")}</span><span aria-hidden="true">( + )</span></a></li>
+        <li><a href="mailto:${CONTACT.email}"><span data-scramble>${t("Email me")}</span><span aria-hidden="true">( + )</span></a></li>
+        <li><a href="${BASE}${CONTACT.resume}" download="Joacim-Tuhin-Gain-Resume.pdf"><span data-scramble>${t("Download résumé")}</span><span aria-hidden="true">( ↓ )</span></a></li>
         ${CONTACT.linkedin ? `<li><a href="${CONTACT.linkedin}" target="_blank" rel="noopener"><span data-scramble>LinkedIn</span><span aria-hidden="true">( ↗ )</span></a></li>` : ""}
       </ul>
+      <div class="theme langs" role="group" aria-label="Language">
+        ${LANGS.map(([code, name]) => `<button type="button" data-lang-set="${code}" lang="${code}" aria-pressed="${code === lang}"><span>${name}</span></button>`).join("")}
+      </div>
       <div class="theme" role="group" aria-label="Theme">
         ${THEMES.map((t) => `<button type="button" data-theme-set="${t}" aria-pressed="false">${THEME_ICONS[t]}<span>${t[0].toUpperCase() + t.slice(1)}</span></button>`).join("")}
       </div>
@@ -85,35 +90,15 @@ function renderHud() {
 
   applyTheme(getTheme());
   drawer.querySelectorAll("[data-theme-set]").forEach((b) => b.addEventListener("click", () => applyTheme(b.dataset.themeSet)));
+  drawer.querySelectorAll("[data-lang-set]").forEach((b) => b.addEventListener("click", () => setLang(b.dataset.langSet)));
   matchMedia("(prefers-color-scheme: light)").addEventListener?.("change", () => dispatchEvent(new CustomEvent("themechange")));
 
   // the bar gets its glass once the page moves
   const onScroll = () => hud.classList.toggle("is-scrolled", scrollY > 8);
   addEventListener("scroll", onScroll, { passive: true }); onScroll();
 
-  // the crop-mark frame travels to the hovered item, and rests on the current page
-  const menu = hud.querySelector(".menu"), frame = menu.querySelector(".menu__frame");
-  const items = [...menu.querySelectorAll("a")];
-  const rest = () => items.find((a) => a.hasAttribute("aria-current")) || null;
-  const place = (el) => {
-    if (!el) { frame.style.opacity = 0; items.forEach((a) => a.classList.remove("is-framed")); return; }
-    const r = el.getBoundingClientRect(), m = menu.getBoundingClientRect();
-    frame.style.opacity = 1;
-    frame.style.transform = `translate(${r.left - m.left - 6}px, ${r.top - m.top - 4}px)`;
-    frame.style.width = `${r.width + 12}px`; frame.style.height = `${r.height + 8}px`;
-    items.forEach((a) => a.classList.toggle("is-framed", a === el));
-  };
-  items.forEach((a) => {
-    a.addEventListener("pointerenter", () => { place(a); a.querySelectorAll("[data-scramble]").forEach(scramble); });
-    a.addEventListener("focus", () => place(a));
-  });
-  menu.addEventListener("pointerleave", () => place(rest()));
-  addEventListener("resize", () => place(rest()));
-  document.fonts?.ready.then(() => place(rest()));
-  requestAnimationFrame(() => place(rest()));
-
   // the drawer opens from the photo button, closes on the scrim, the close button, a link or Escape
-  const btn = hud.querySelector(".me__btn");
+  const btn = hud.querySelector(".navbtn");
   const setOpen = (open) => {
     drawer.classList.toggle("is-open", open); drawer.inert = !open;
     btn.setAttribute("aria-expanded", String(open));

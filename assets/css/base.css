@@ -419,3 +419,12 @@ body.story { --f-body: var(--f-mono); --t-lead: clamp(.94rem, 1.3vw, 1.05rem); -
 .drawer .me__list { margin-top: auto; }
 .drawer .theme { margin-top: 0; }
 .has-drawer { overflow: hidden; }
+
+/* ── v2.2 · top bar: brand left, one menu button right (the pages live in the drawer) */
+.hud { grid-template-columns: minmax(0, 1fr) auto; }
+.navbtn { display: inline-flex; align-items: center; gap: 12px; height: 48px; padding: 0 16px 0 5px; border-radius: 999px; border: 1.5px solid var(--line-2); background: var(--ink-2); color: var(--paper); transition: border-color .3s, color .3s; }
+.navbtn:hover, .navbtn[aria-expanded="true"] { border-color: var(--accent); color: var(--accent); }
+.navbtn__me { position: relative; display: block; width: 36px; height: 36px; }
+.navbtn__me img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; object-position: 50% 20%; }
+.navbtn__icon { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+.langs button { font-family: var(--f-display); font-size: .85rem; letter-spacing: 0; }

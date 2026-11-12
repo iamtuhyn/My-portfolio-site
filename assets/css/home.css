@@ -200,3 +200,14 @@ a.ai__card:hover { border-color: var(--mint); transform: translateY(-3px); }
   .wl__go { grid-column: 3; grid-row: 2; }
   .wl__row:hover, .wl__row:focus-visible { padding-inline: 0; background: none; }
 }
+
+/* ───────── v2.2 · hero centred, numbers inside the first screen ───────── */
+.hm-hero { padding: clamp(18px, 4vh, 44px) 0 clamp(36px, 5vw, 64px); text-align: center; }
+.hm-hero h1 { font-size: clamp(2.3rem, 5.4vw, 4.9rem); max-width: 17ch; margin: 18px auto 20px; }
+.hm-hero__lead { max-width: 44em; margin-inline: auto; font-size: clamp(1rem, 1.25vw, 1.14rem); }
+.hm-hero .hm-cta { justify-content: center; margin-top: 26px; }
+.home .hm-facts { margin-top: clamp(28px, 4.5vh, 52px); }
+.hm-facts > div, .hm-facts > div + div { padding: 18px 16px 20px; }
+.hm-facts dd { margin-inline: auto; }
+@media (max-width: 640px) { .hm-facts > div:nth-child(3) { padding-left: 16px; } }
+.home .hm-hero__lead { margin-inline: auto; }
