@@ -561,3 +561,14 @@ dialog.modal--lightbox { width: min(1400px, 100% - 24px); background: #070706; }
 .ct__field input, .ct__field textarea { padding: 13px 16px; }
 .ct__field textarea { min-height: 110px; }
 .ct__actions .btn { min-height: 50px; }
+
+/* v2.4 · GridOps: "8h" is the headline of this case, with the screen as its proof */
+.cover-8h { position: relative; width: 100%; display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); align-items: center; gap: clamp(14px, 3vw, 36px); }
+.cover-8h__n { text-align: center; }
+.cover-8h__n b { display: block; font-family: var(--f-display); font-weight: 700; letter-spacing: -.05em; font-size: clamp(4.4rem, 10vw, 8rem); line-height: .86; color: var(--accent); }
+.cover-8h__n span { display: block; margin-top: 12px; font-family: var(--f-mono); font-size: .64rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.cover-8h .browser { max-height: 300px; }
+.cover-8h--hero { margin-top: 30px; grid-template-columns: minmax(0, .6fr) minmax(0, 1.4fr); }
+.cover-8h--hero .cover-8h__n b { font-size: clamp(5rem, 13vw, 11rem); }
+.cover-8h--hero .browser { max-height: min(60vh, 520px); }
+@media (max-width: 640px) { .cover-8h, .cover-8h--hero { grid-template-columns: 1fr; } .cover-8h .browser { max-height: 220px; } }

@@ -39,7 +39,7 @@ function applyTheme(t) {
 }
 
 const NAV = [["work.html", "Work", "work"], ["story.html", "Story", "story"], ["expertise.html", "Expertise", "expertise"], ["more.html", "Frames", "more"], ["contact.html", "Contact", "contact"]];
-const CASES = [["work/clm.html", "CLM ecosystem"], ["work/recyclium.html", "Recyclium"], ["work/gridops.html", "GridOps"]];
+const CASES = [["work/clm.html", "CLM ecosystem"], ["work/recyclium.html", "Recyclium"], ["work/gridops.html", "GridOps"], ["work.html", "All projects"]];
 
 function renderHud() {
   const here = (key) => (PAGE === key ? ' aria-current="page"' : "");
@@ -71,7 +71,7 @@ function renderHud() {
         <a class="drawer__top" href="${BASE}story.html"${at("story")}>${t("Story")}</a>
         <a class="drawer__top" href="${BASE}expertise.html"${at("expertise")}>${t("Expertise")}</a>
         <a class="drawer__top" href="${BASE}more.html"${at("more")}>${t("Frames")}</a>
-        <a class="drawer__top drawer__contact" href="${BASE}contact.html"${at("contact")}>${t("Contact")}</a>
+        <a class="drawer__top" href="${BASE}contact.html"${at("contact")}>${t("Contact")}</a>
       </nav>
       <ul class="me__list">
         <li><a href="${BASE}contact.html#book"><span data-scramble>${t("Book a conversation")}</span><span aria-hidden="true">( + )</span></a></li>
@@ -79,9 +79,6 @@ function renderHud() {
         <li><a href="${BASE}${CONTACT.resume}" download="Joacim-Tuhin-Gain-Resume.pdf"><span data-scramble>${t("Download résumé")}</span><span aria-hidden="true">( ↓ )</span></a></li>
         ${CONTACT.linkedin ? `<li><a href="${CONTACT.linkedin}" target="_blank" rel="noopener"><span data-scramble>LinkedIn</span><span aria-hidden="true">( ↗ )</span></a></li>` : ""}
       </ul>
-      <div class="theme langs" role="group" aria-label="Language">
-        ${LANGS.map(([code, name]) => `<button type="button" data-lang-set="${code}" lang="${code}" aria-pressed="${code === lang}"><span>${name}</span></button>`).join("")}
-      </div>
       <div class="theme" role="group" aria-label="Theme">
         ${THEMES.map((t) => `<button type="button" data-theme-set="${t}" aria-pressed="false">${THEME_ICONS[t]}<span>${t[0].toUpperCase() + t.slice(1)}</span></button>`).join("")}
       </div>
@@ -90,7 +87,6 @@ function renderHud() {
 
   applyTheme(getTheme());
   drawer.querySelectorAll("[data-theme-set]").forEach((b) => b.addEventListener("click", () => applyTheme(b.dataset.themeSet)));
-  drawer.querySelectorAll("[data-lang-set]").forEach((b) => b.addEventListener("click", () => setLang(b.dataset.langSet)));
   matchMedia("(prefers-color-scheme: light)").addEventListener?.("change", () => dispatchEvent(new CustomEvent("themechange")));
 
   // the bar gets its glass once the page moves

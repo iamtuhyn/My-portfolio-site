@@ -6,7 +6,11 @@
 // Covered so far: the menu, the footer, the home page and the contact page.
 
 export const LANGS = [["en", "English"], ["fr", "Français"], ["de", "Deutsch"]];
+// Switched off for now (2026-11-13): the switcher was removed until every page is translated.
+// To bring it back: set ENABLED to true and restore the language buttons in site.js.
+const ENABLED = false;
 export const lang = (() => {
+  if (!ENABLED) return "en";
   try { const l = localStorage.getItem("lang"); return LANGS.some(([c]) => c === l) ? l : "en"; } catch { return "en"; }
 })();
 export function setLang(code) {

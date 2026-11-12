@@ -415,7 +415,6 @@ body.story { --f-body: var(--f-mono); --t-lead: clamp(.94rem, 1.3vw, 1.05rem); -
 .drawer__sub { font-size: 1.18rem; font-weight: 400; color: var(--paper-2); padding: 6px 0 6px 18px; }
 .drawer__label { color: var(--muted); margin: 10px 0 2px; }
 .drawer__nav a[aria-current="page"] { color: var(--primary-ink); }
-.drawer__nav a.drawer__contact { color: var(--accent); }
 .drawer .me__list { margin-top: auto; }
 .drawer .theme { margin-top: 0; }
 .has-drawer { overflow: hidden; }
